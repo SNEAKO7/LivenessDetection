@@ -1,32 +1,44 @@
 Liveness Detection System
 
 
-Real-time liveness detection to verify human presence using MediaPipe and OpenCV. Offers two challenges: blink detection (via Eye Aspect Ratio) and gesture recognition (finger counting). Users choose via console, with results shown for 2 seconds before refreshing.
+Real-time liveness detection to verify human presence using MediaPipe and OpenCV. 
+Offers two challenges: blink detection (via Eye Aspect Ratio) and gesture recognition (finger counting).
+Users choose via console, with results shown for 2 seconds before refreshing.
 
-Features
-Blink Detection: Tracks eye contours and counts blinks using iris landmarks.
-Gesture Recognition: Counts raised fingers with refined thumb logic.
-User Choice: Console selection (1: Blink, 2: Gesture, 3: End).
-Visual Feedback: Displays eye outlines and detection results.
-Camera Management: Closes/reopens webcam between challenges.
+Features-
+-Blink Detection: Tracks eye contours and counts blinks using iris landmarks.
+
+-Gesture Recognition: Counts raised fingers with refined thumb logic.
+
+-User Choice: Console selection (1: Blink, 2: Gesture, 3: End).
+
+-Visual Feedback: Displays eye outlines and detection results.
+
+-Camera Management: Closes/reopens webcam between challenges.
 
 
 Prerequisites
-Python 3.6+
-Webcam
+
+-Python 3.6+
+
+-Webcam
 
 
 Installation
-Clone the repository: git clone https://github.com/yourusername/liveness-detection-system.git
-                      cd liveness-detection-system
+Clone the repository: ->git clone https://github.com/yourusername/liveness-detection-system.git
 
-Install dependencies: pip install mediapipe opencv-python
+                      ->cd liveness-detection-system
 
-Run the script: python LivenessDetection.py
+Install dependencies: ->pip install mediapipe opencv-python
+
+Run the script: ->python LivenessDetection.py
 
 Follow console prompts:
+
 1: Blink Detection Test (blink the specified number of times).
+
 2: Gesture Recognition Test (raise the specified fingers).
+
 3: End Test.
 Press c to submit your challenge response;
 
