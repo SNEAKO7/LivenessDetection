@@ -1,6 +1,6 @@
-Below is a concise and well-structured README for your GitHub repository for the Liveness Detection System project. It includes essential sections like project overview, features, installation instructions, usage, and more, all tailored to what we’ve built together.
-
 Liveness Detection System
+
+
 Real-time liveness detection to verify human presence using MediaPipe and OpenCV. Offers two challenges: blink detection (via Eye Aspect Ratio) and gesture recognition (finger counting). Users choose via console, with results shown for 2 seconds before refreshing.
 
 Features
