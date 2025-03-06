@@ -157,7 +157,7 @@ cv2.destroyAllWindows()'''
 
 '''Raised EAR_THRESHOLD to 0.25 (more likely to catch blinks).
 Reduced BLINK_CONSEC_FRAMES to 2 (faster blink detection).
-Added green dots on eye landmarks to visually confirm dlib is tracking your eyes correctly.
+Added green dots on eye landmarks to visually confirm dlib is tracking my eyes correctly.
 Motion Detection:
 Increased motion_threshold to 20000 (less sensitive to minor changes).
 Added a 5-frame moving average (motion_history) to smooth out fluctuations.
@@ -336,11 +336,11 @@ cap.release()
 cv2.destroyAllWindows()'''
 
 '''Blink Detection:
-Lowered EAR_THRESHOLD to 0.22 (your blinks hit 0.20).
+Lowered EAR_THRESHOLD to 0.22 (my blinks hit 0.20).
 Set BLINK_CONSEC_FRAMES to 1 (catches single-frame blinks).
 blink_detected now triggers on any blink and resets only after a 30-frame "liveness window" expires.
 Motion Detection:
-Lowered motion_threshold to 400,000 (your motion often exceeds this, e.g., 605,112, but drops below 500,000 when still, e.g., 446,244).
+Lowered motion_threshold to 400,000 (my motion often exceeds this, e.g., 605,112, but drops below 500,000 when still, e.g., 446,244).
 Liveness Logic:
 Added a liveness_window (30 frames ~1 second at 30fps). Once a blink is detected, you’re "Real" for 30 frames if motion is present, making it less strict.
 blink_detected persists during this window, aligning better with motion.
@@ -402,7 +402,7 @@ if not cap.isOpened():
 # Variables
 prev_frame = None
 motion_threshold = 400000  # Lowered for subtle movement
-EAR_THRESHOLD = 0.22  # Adjusted to catch your blinks
+EAR_THRESHOLD = 0.22  # Adjusted to catch my blinks
 BLINK_CONSEC_FRAMES = 1  # Reduced for quick blinks
 blink_counter = 0
 blink_detected = False
@@ -528,7 +528,7 @@ Low variance (<10,000) with some motion (>10,000) suggests a video.
 Very low variance (<5,000) and low motion (<10,000) suggests a picture.
 is_spoof flag combines these checks.
 Tuning:
-Kept motion_threshold = 400000 and EAR_THRESHOLD = 0.22, as they caught your motion and blinks previously.
+Kept motion_threshold = 400000 and EAR_THRESHOLD = 0.22, as they caught my motion and blinks previously.
 Added blink_timer display to track blink intervals.'''
 '''import cv2
 import numpy as np
@@ -586,7 +586,7 @@ if not cap.isOpened():
 # Variables
 prev_frame = None
 motion_threshold = 400000  # For significant movement
-EAR_THRESHOLD = 0.22  # For your blinks (~0.20)
+EAR_THRESHOLD = 0.22  # For my blinks (~0.20)
 BLINK_CONSEC_FRAMES = 1  # Quick blinks
 blink_counter = 0
 blink_detected = False
@@ -731,9 +731,9 @@ cv2.destroyAllWindows()'''
 
 '''Video Detection:
 The new threshold (avg_variance < 1e11) catches the video phase where variance is ~7.2e10, flagging it as a spoof when motion is present (e.g., >100,000).
-In your logs, the last 20 seconds will trigger "Low motion variance with motion - possible video spoof."
+In my logs, the last 20 seconds will trigger "Low motion variance with motion - possible video spoof."
 Live Misclassification:
-Variance during your presence (e.g., 1e12) is well above 1e11, preventing false spoof triggers.
+Variance during my presence (e.g., 1e12) is well above 1e11, preventing false spoof triggers.
 Extended liveness_buffer (90 frames) ensures "Real" persists longer, reducing flickers to "Spoof."
 Blink Pattern Sensitivity:
 Std dev < 50 frames detects more subtle regularities in video blinks, adding an extra layer of spoof detection.'''
@@ -927,10 +927,10 @@ cv2.destroyAllWindows()'''
 '''Blink Detection Logic:
 blink_detected is now set to True when ear < EAR_THRESHOLD and blink_counter >= BLINK_CONSEC_FRAMES (1), ensuring it’s active during the blink itself, not just at the end.
 Resets to False when the blink ends (EAR rises above 0.22), allowing the system to track each blink event accurately.
-This fixes the issue where blinks (e.g., EAR 0.12, 0.20) weren’t registering as True in your logs.
+This fixes the issue where blinks (e.g., EAR 0.12, 0.20) weren’t registering as True in my logs.
 Spoof Detection Sensitivity:
-Increased the regular blink pattern threshold to np.std(intervals) < 100 (from 50) and required at least 5 intervals (instead of 3). Your blinks every second (~30 frames) will have natural variance, avoiding false spoof flags unless they’re unnaturally regular (e.g., std_dev < 20).
-Kept the video spoof condition avg_variance < 5e9 and avg_motion > 100000, which won’t trigger for your high variance (e.g., 1e10+), but will catch videos with lower variance.
+Increased the regular blink pattern threshold to np.std(intervals) < 100 (from 50) and required at least 5 intervals (instead of 3). my blinks every second (~30 frames) will have natural variance, avoiding false spoof flags unless they’re unnaturally regular (e.g., std_dev < 20).
+Kept the video spoof condition avg_variance < 5e9 and avg_motion > 100000, which won’t trigger for my high variance (e.g., 1e10+), but will catch videos with lower variance.
 Blink Timeout Enforcement:
 blink_timer increments every frame and resets to 0 only when a blink is detected (EAR < 0.22), ensuring videos with sparse blinks timeout after 5 seconds (150 frames).
 Liveness Persistence:
@@ -1131,7 +1131,7 @@ Extended Liveness Persistence:
 Increased liveness_buffer from 90 to 120 frames (~4 seconds at 30 fps). This ensures that after a blink or motion detection, the "Real" status persists longer, preventing quick drops to "Spoof."
 liveness_counter is refreshed to 120 whenever blink_detected is True, keeping you classified as "Real" as long as you’re blinking naturally.
 Reduced Spoof Detection Sensitivity:
-Adjusted the "regular blink pattern" threshold from np.std(intervals) < 100 to < 150. This allows more natural variation in your blink timing (e.g., intervals of 30-60 frames for blinks every 1-2 seconds) without triggering a spoof alert, while still catching highly regular video patterns (e.g., std_dev < 20).
+Adjusted the "regular blink pattern" threshold from np.std(intervals) < 100 to < 150. This allows more natural variation in my blink timing (e.g., intervals of 30-60 frames for blinks every 1-2 seconds) without triggering a spoof alert, while still catching highly regular video patterns (e.g., std_dev < 20).
 Blink Timer Management:
 blink_timer increments every frame and resets to 0 on each detected blink, ensuring that blink_timeout (150 frames, ~5 seconds) only triggers for long periods without blinks, which is more typical of spoofs.'''
 
@@ -1325,7 +1325,7 @@ cv2.destroyAllWindows()'''
 
 '''Key Changes Explained
 Lowered EAR_THRESHOLD to 0.20 (from 0.22):
-Why: Your EAR values (e.g., 0.16, 0.21) indicate blinks are occurring but sometimes hover near 0.22, missing detection. Lowering the threshold ensures more blinks are caught, improving reliability for real users.
+Why: my EAR values (e.g., 0.16, 0.21) indicate blinks are occurring but sometimes hover near 0.22, missing detection. Lowering the threshold ensures more blinks are caught, improving reliability for real users.
 Impact: Increases sensitivity to subtle eye closures, reducing missed blinks.
 Increased BLINK_CONSEC_FRAMES to 2 (from 1):
 Why: Requiring a blink to last at least 2 frames confirms a full eye closure and reopening cycle, preventing false positives from brief EAR dips and ensuring only genuine blinks are counted.
@@ -1335,7 +1335,7 @@ Why: The previous logic wasn’t consistently registering blinks, as Blink Detec
 Change: blink_detected = (blink_counter >= BLINK_CONSEC_FRAMES) is set within the if ear < EAR_THRESHOLD block, and the full blink cycle is recorded when EAR rises again.
 Impact: Ensures blinks like EAR: 0.16 are detected and contribute to maintaining "Real" status.
 Increased Spoof Detection Threshold to 300 (from 200):
-Why: The condition np.std(intervals) < 200 was too strict, flagging your natural blinking as a spoof due to perceived regularity. Increasing it to 300 allows more variation (e.g., intervals of 30-90 frames) typical of real users, while still catching highly regular video patterns (e.g., std_dev < 50).
+Why: The condition np.std(intervals) < 200 was too strict, flagging my natural blinking as a spoof due to perceived regularity. Increasing it to 300 allows more variation (e.g., intervals of 30-90 frames) typical of real users, while still catching highly regular video patterns (e.g., std_dev < 50).
 Impact: Reduces false "Spoof" triggers for real users, maintaining accuracy for video detection.
 Enhanced Liveness Persistence:
 Why: The liveness_counter was depleting too quickly, allowing "Spoof" status to take over after initial blinks or motion. The new logic refreshes it more aggressively.
@@ -1747,8 +1747,8 @@ cv2.destroyAllWindows()'''
 '''Current Issue: Both you and the video score 0.54–0.57, and high motion variance (e.g., 1e12) pushes the video over the "Real" threshold.
 With Pretrained Model:
 A better model might output a wider score range (e.g., 0.8–0.9 for real, 0.2–0.4 for spoofs), making classification clearer.
-It could detect video-specific artifacts (e.g., screen glare, frame rate consistency) that your CNN misses, lowering the video’s score.
-Combined with your existing motion and blink checks, this would reduce false positives.
+It could detect video-specific artifacts (e.g., screen glare, frame rate consistency) that my CNN misses, lowering the video’s score.
+Combined with my existing motion and blink checks, this would reduce false positives.
 NOW INTEGRATING PRE-TRAINED MODEL MOBILENETV2'''
 
 '''import cv2
@@ -1952,7 +1952,7 @@ Why: logs show high AI scores (e.g., 0.98) for the video, indicating the pretrai
 Impact: Prepares for future accuracy boosts; currently relies on spoof logic enhancements.
 Texture Analysis with LBP:
 Change: Added compute_texture_score function and a spoof condition texture_score < 0.02. Logs now include Texture Score.
-Why: Videos have smoother textures (lower variance) due to compression or screen rendering, unlike real skin. Your logs lack this data, but it should differentiate the video.
+Why: Videos have smoother textures (lower variance) due to compression or screen rendering, unlike real skin. my logs lack this data, but it should differentiate the video.
 Impact: Flags videos with uniform texture, catching spoofs missed by AI scores (e.g., 0.94).
 Stricter Spoof Logic Priority:
 Change: Reordered liveness decision to check not is_spoof before liveness_score > 0.7, ensuring spoof flags (e.g., "No blink detected") aren’t overridden.
@@ -1966,8 +1966,8 @@ Adjusted Liveness Decision:
 Change: Simplified conditions:
 Primary: liveness_score > 0.7 and not is_spoof.
 Fallback: liveness_score >= 0.5 with motion_variance > 1e12, irregular blinks, high texture, and not is_spoof.
-Why: High AI scores (e.g., 0.98) bypassed spoof flags in your logs. This ensures spoof conditions dominate, balancing model confidence with spoof checks.
-Impact: Reduces false positives, correctly classifying your video as "Spoof" when spoof flags trigger.'''
+Why: High AI scores (e.g., 0.98) bypassed spoof flags in my logs. This ensures spoof conditions dominate, balancing model confidence with spoof checks.
+Impact: Reduces false positives, correctly classifying my video as "Spoof" when spoof flags trigger.'''
 
 '''import cv2
 import numpy as np
@@ -2413,7 +2413,7 @@ cv2.destroyAllWindows()'''
 
 '''Tracking Recent Blinks Over a Time Window:
 Change: Added recent_blinks = sum(1 for event in blink_events if frame_counter - event < 300) to count blinks in the last 10 seconds (~300 frames at 30 fps).
-Why: Your logs showed sporadic blinks in the video (e.g., EAR 0.13-0.18) causing it to flip to "real." Real people blink 15-20 times per minute (2-3 times in 10 seconds), so requiring at least 2 blinks ensures consistent liveness, while videos with fewer blinks are flagged.
+Why: my logs showed sporadic blinks in the video (e.g., EAR 0.13-0.18) causing it to flip to "real." Real people blink 15-20 times per minute (2-3 times in 10 seconds), so requiring at least 2 blinks ensures consistent liveness, while videos with fewer blinks are flagged.
 Impact: Prevents the video from being classified as "real" unless it mimics a natural blink rate, which is unlikely.
 Strengthened Spoof Detection:
 Change: Updated spoof condition to if recent_blinks < 2 and blink_timer > 150, replacing the simpler blink_timer > 150 check.
@@ -2421,11 +2421,11 @@ Why: The video’s initial lack of blinks triggered "spoof," but later blinks re
 Impact: Stabilizes "spoof" classification for the video, avoiding flips back to "real" after sparse blinks.
 Adjusted Liveness Decision Criteria:
 Change: Modified primary condition to liveness_score > 0.6 and recent_blinks >= 2 and not is_spoof, and fallback to liveness_score >= 0.4 and motion_variance > 1e12 and recent_blinks >= 1 and not is_spoof.
-Why: Your face had consistent blinks early on, ensuring recent_blinks >= 2, while the video’s sporadic blinks (e.g., 10 late blinks then none) drop recent_blinks below 2 after 10 seconds, preventing "real" classification even with high AI scores (e.g., 0.78).
-Impact: Ensures "real" status requires sustained blinking, keeping your live detection accurate and video detection as "spoof."
+Why: my face had consistent blinks early on, ensuring recent_blinks >= 2, while the video’s sporadic blinks (e.g., 10 late blinks then none) drop recent_blinks below 2 after 10 seconds, preventing "real" classification even with high AI scores (e.g., 0.78).
+Impact: Ensures "real" status requires sustained blinking, keeping my live detection accurate and video detection as "spoof."
 Reset Liveness Counter on Spoof:
 Change: Added if is_spoof: liveness_counter = 0 before the counter decrement logic.
-Why: The video’s initial "real" classification might have been due to a lingering liveness_counter from your prior detection. Resetting it on spoof detection prevents carryover effects.
+Why: The video’s initial "real" classification might have been due to a lingering liveness_counter from my prior detection. Resetting it on spoof detection prevents carryover effects.
 Impact: Eliminates the initial "real" misclassification when switching to the video.
 Clean Up Old Blink Events:
 Change: Added if frame_counter % 100 == 0: blink_events = [event for event in blink_events if frame_counter - event < 600] to remove events older than 20 seconds.
@@ -2672,19 +2672,19 @@ cv2.destroyAllWindows()'''
 
 '''Relaxed Blink Requirement:
 Change: Changed spoof condition to recent_blinks < 2 and blink_timer > 150 (from < 3 and > 90), and primary liveness condition to recent_blinks >= 2.
-Why: Your logs show sparse blinks (e.g., recent_blinks at 2), typical for some people (15-20 blinks/min ≈ 1-2 in 10 sec). 5 seconds aligns better with natural rates, avoiding false spoofs.
+Why: my logs show sparse blinks (e.g., recent_blinks at 2), typical for some people (15-20 blinks/min ≈ 1-2 in 10 sec). 5 seconds aligns better with natural rates, avoiding false spoofs.
 Impact: You’ll pass with 2 blinks in 10 seconds, reducing spoof flags unless you stop blinking for over 5 seconds.
 Adjusted EAR Threshold:
 Change: Increased EAR_THRESHOLD from 0.20 to 0.25.
-Why: Your EAR drops to 0.19–0.26 during blinks, often missing the 0.20 threshold (e.g., 0.21–0.24 not detected). 0.25 catches these, increasing recent_blinks.
+Why: my EAR drops to 0.19–0.26 during blinks, often missing the 0.20 threshold (e.g., 0.21–0.24 not detected). 0.25 catches these, increasing recent_blinks.
 Impact: More blinks detected (e.g., EAR 0.24–0.25), ensuring recent_blinks >= 2 more often.
 Prioritized AI Score:
 Change: Added override: liveness_score > 0.9 and not is_spoof before the primary condition.
-Why: Your AI scores are frequently >0.9 (e.g., 0.95, 0.99), indicating high confidence in a live face, yet spoof flags override this. This prioritizes strong AI evidence.
+Why: my AI scores are frequently >0.9 (e.g., 0.95, 0.99), indicating high confidence in a live face, yet spoof flags override this. This prioritizes strong AI evidence.
 Impact: You’re classified as "real" when AI scores are very high, even with sparse blinks, while videos with lower scores or regular patterns remain "spoof."
 Kept Reset Sensitivity:
 Change: Retained motion reset logic unchanged.
-Why: No video transition here, but it ensures robustness for future tests. Your motion stays consistent (2M–0.5M), avoiding unnecessary resets.
+Why: No video transition here, but it ensures robustness for future tests. my motion stays consistent (2M–0.5M), avoiding unnecessary resets.
 Impact: Maintains state unless a significant change occurs (e.g., video swap).'''
 
 '''import cv2
@@ -3555,7 +3555,7 @@ import pytesseract
 import random
 from imutils import face_utils
 
-# Set the path to Tesseract-OCR (adjust if needed based on your installation)
+# Set the path to Tesseract-OCR (adjust if needed based on my installation)
 pytesseract.pytesseract.tesseract_cmd = r"C:\Tesseract-OCR\tesseract.exe"
 
 # Initialize dlib's face detector
@@ -3597,7 +3597,7 @@ def detect_text_region(frame):
         x, y, w, h = cv2.boundingRect(cnt)
         area = w * h
         aspect_ratio = w / h if h != 0 else 0
-        # Adjust these thresholds based on your text size and camera setup
+        # Adjust these thresholds based on my text size and camera setup
         if 1000 < area < 10000 and 0.5 < aspect_ratio < 2.0:
             valid_contours.append(cnt)
     
@@ -3839,7 +3839,7 @@ while True:
         detected_fingers = None
 
     # Display instructions and detected finger count
-    instruction = f"Hold up {challenge_fingers} fingers with your hand upright"
+    instruction = f"Hold up {challenge_fingers} fingers with my hand upright"
     cv2.putText(overlay, instruction, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
     cv2.putText(overlay, "Press 'c' to capture", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
     
@@ -4004,7 +4004,7 @@ while True:
         detected_fingers = None
 
     # Display instructions and detected finger count
-    instruction = f"Hold up {challenge_fingers} fingers with your hand upright"
+    instruction = f"Hold up {challenge_fingers} fingers with my hand upright"
     cv2.putText(overlay, instruction, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
     cv2.putText(overlay, "Press 'c' to capture", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
     
@@ -4169,7 +4169,7 @@ while True:
         detected_fingers = None
 
     # Display instructions and detected finger count
-    instruction = f"Hold up {challenge_fingers} fingers with your hand upright. If thumb is not used please try to bend it downwards to pass the challenge easily"
+    instruction = f"Hold up {challenge_fingers} fingers with my hand upright. If thumb is not used please try to bend it downwards to pass the challenge easily"
     cv2.putText(overlay, instruction, (10, 30), cv2.FONT_HERSHEY_TRIPLEX, 0.7, (0, 0, 0), 2)
     cv2.putText(overlay, "Press 'c' to capture", (10, 60), cv2.FONT_HERSHEY_TRIPLEX, 0.7, (0, 0, 0), 2)
     
@@ -4342,7 +4342,7 @@ while True:
         detected_fingers = None
 
     # Display instructions and detected finger count
-    instruction = f"Hold up {challenge_fingers} fingers with your hand upright. If a finger is not used make sure it is below your knuckles"
+    instruction = f"Hold up {challenge_fingers} fingers with my hand upright. If a finger is not used make sure it is below my knuckles"
     cv2.putText(overlay, instruction, (10, 30), cv2.FONT_HERSHEY_TRIPLEX, 0.7, (0, 0, 0), 2)
     cv2.putText(overlay, "Press 'c' to capture", (10, 60), cv2.FONT_HERSHEY_TRIPLEX, 0.7, (0, 0, 0), 2)
     
@@ -4535,7 +4535,7 @@ while True:
     line_spacing = int(30 * (frame_height / 480))
     
     # Display instructions and detected finger count
-    instruction = f"Hold up {challenge_fingers} fingers with your hand upright. If a finger is not used make sure it is below your knuckles"
+    instruction = f"Hold up {challenge_fingers} fingers with my hand upright. If a finger is not used make sure it is below my knuckles"
     cv2.putText(overlay, instruction, (20, line_spacing), cv2.FONT_HERSHEY_TRIPLEX, font_scale, (0, 0, 0), text_thickness)
     cv2.putText(overlay, "Press 'c' to capture, 'f' to toggle fullscreen, '+/-' to resize, 'q' to quit", 
                 (20, 2*line_spacing), cv2.FONT_HERSHEY_TRIPLEX, font_scale, (0, 0, 0), text_thickness)
@@ -4758,7 +4758,7 @@ while True:
     cv2.addWeighted(text_bg, 0.7, overlay, 0.3, 0, overlay)
     
     # Display instructions and detected finger count
-    instruction = f"Hold up {challenge_fingers} fingers with your hand upright."
+    instruction = f"Hold up {challenge_fingers} fingers with my hand upright."
     cv2.putText(overlay, instruction, (20, line_spacing), font, font_scale, (0, 0, 0), text_thickness)
     cv2.putText(overlay, "Press 'c' to capture, 'f' to toggle fullscreen, '+/-' to resize, 'q' to quit", 
                 (20, 2*line_spacing), font, font_scale*0.8, (0, 0, 0), text_thickness-1)  # Smaller font for controls
@@ -4973,8 +4973,8 @@ while True:
     line_spacing = int(35 * (frame_height / 480))
     
     # Break down instructions into smaller chunks that fit on screen
-    instruction1 = f"Hold up {challenge_fingers} fingers with your hand upright."
-    instruction2 = "Unused fingers should be below your knuckles."
+    instruction1 = f"Hold up {challenge_fingers} fingers with my hand upright."
+    instruction2 = "Unused fingers should be below my knuckles."
     controls = "Press 'c': capture  'f': fullscreen  '+/-': resize  'q': quit"
     
     # Display instructions and controls with background
@@ -5235,7 +5235,7 @@ while True:
 
     # Display instructions based on challenge type
     if challenge_type == "fingers":
-        instruction = f"Hold up {challenge_fingers} fingers with your hand upright"
+        instruction = f"Hold up {challenge_fingers} fingers with my hand upright"
     else:
         instruction = f"Blink {challenge_blinks} times"
     cv2.putText(overlay, instruction, (10, 30), cv2.FONT_HERSHEY_TRIPLEX, 0.7, (0, 0, 0), 2)
@@ -5379,7 +5379,7 @@ def count_raised_fingers(hand_landmarks):
 
 # Function to prompt user for challenge choice
 def get_user_choice():
-    print("\nChoose your liveness detection challenge:")
+    print("\nChoose my liveness detection challenge:")
     print("1. Blink Detection Test")
     print("2. Gesture Recognition Test (Finger Counting)")
     print("3. End Test")
@@ -5477,7 +5477,7 @@ while True:
 
         # Display instructions based on challenge type
         if challenge_type == "fingers":
-            instruction = f"Hold up {challenge_fingers} fingers with your hand upright"
+            instruction = f"Hold up {challenge_fingers} fingers with my hand upright"
         else:
             instruction = f"Blink {challenge_blinks} times"
         cv2.putText(overlay, instruction, (10, 30), cv2.FONT_HERSHEY_TRIPLEX, 0.7, (0, 0, 0), 2)
@@ -5624,7 +5624,7 @@ def count_raised_fingers(hand_landmarks):
 
 # Function to prompt user for challenge choice
 def get_user_choice():
-    print("\nChoose your liveness detection challenge:")
+    print("\nChoose my liveness detection challenge:")
     print("1. Blink Detection Test")
     print("2. Gesture Recognition Test (Finger Counting)")
     print("3. End Test")
@@ -5722,7 +5722,7 @@ while True:
 
         # Display instructions based on challenge type
         if challenge_type == "fingers":
-            instruction = f"Hold up {challenge_fingers} fingers with your hand upright"
+            instruction = f"Hold up {challenge_fingers} fingers with my hand upright"
         else:
             instruction = f"Blink {challenge_blinks} times"
         cv2.putText(overlay, instruction, (10, 30), cv2.FONT_HERSHEY_TRIPLEX, 0.7, (0, 0, 0), 2)
@@ -5922,7 +5922,7 @@ def check_head_movement(eulerAngles, direction="left", threshold=15):
 
 # Modified function to include head movement test challenge
 def get_user_choice():
-    print("\nChoose your liveness detection challenge:")
+    print("\nChoose my liveness detection challenge:")
     print("1. Blink Detection Test")
     print("2. Gesture Recognition Test (Finger Counting)")
     print("3. Head Movement Test")
@@ -6038,11 +6038,11 @@ while True:
 
         # Display instructions based on challenge type
         if challenge_type == "fingers":
-            instruction = f"Hold up {challenge_fingers} fingers with your hand upright"
+            instruction = f"Hold up {challenge_fingers} fingers with my hand upright"
         elif challenge_type == "blinks":
             instruction = f"Blink {challenge_blinks} times"
         elif challenge_type == "head":
-            instruction = f"Turn your head to the {challenge_direction}"
+            instruction = f"Turn my head to the {challenge_direction}"
         else:
             instruction = ""
         cv2.putText(overlay, instruction, (10, 30), cv2.FONT_HERSHEY_TRIPLEX, 0.7, (0, 0, 0), 2)
@@ -6250,7 +6250,7 @@ def check_head_movement(eulerAngles, direction="left", threshold=15):
 
 # Modified function to include head movement with blink and gesture challenges
 def get_user_choice():
-    print("\nChoose your liveness detection challenge:")
+    print("\nChoose my liveness detection challenge:")
     print("1. Blink Detection with Head Movement")
     print("2. Gesture Recognition with Head Movement")
     print("3. End Test")
@@ -6558,7 +6558,7 @@ def check_head_movement(eulerAngles, direction="left", threshold=15):
 # Modified function to show last result and include head movement with challenges
 def get_user_choice():
     print(f"\nLast Challenge Result: {last_result}")
-    print("Choose your liveness detection challenge:")
+    print("Choose my liveness detection challenge:")
     print("1. Blink Detection with Head Movement")
     print("2. Gesture Recognition with Head Movement")
     print("3. End Test")
@@ -6876,7 +6876,7 @@ def check_head_movement(eulerAngles, direction="left", threshold=15):
 # Modified function to show last result and include head movement with challenges
 def get_user_choice():
     print(f"\nLast Challenge Result: {last_result}")
-    print("Choose your liveness detection challenge:")
+    print("Choose my liveness detection challenge:")
     print("1. Blink Detection with Head Movement")
     print("2. Gesture Recognition with Head Movement")
     print("3. End Test")
@@ -7094,7 +7094,7 @@ def create_model():
 # Create the model
 anti_spoofing_model = create_model()
 
-# Load weights from your HDF5 file (update the path if needed)
+# Load weights from my HDF5 file (update the path if needed)
 anti_spoofing_model.load_weights("D:/LivenessDetection/antispoofing-master/model.h5")
 
 # Compile the model
@@ -7228,7 +7228,7 @@ def check_head_movement(eulerAngles, direction="left", threshold=15):
 def get_user_choice():
     # Print the last result and prompt the user for a challenge choice.
     print(f"\nLast Challenge Result: {last_result}")
-    print("Choose your liveness detection challenge:")
+    print("Choose my liveness detection challenge:")
     print("1. Blink Detection with Head Movement")
     print("2. Gesture Recognition with Head Movement")
     print("3. End Test")
