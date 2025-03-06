@@ -7054,7 +7054,8 @@ face_mesh.close()
 cv2.destroyAllWindows()
 print("Test terminated.")
 
-#Adding the pre trained anti spoofing model
+#Adding the pre trained anti spoofing model, download and clone from github and integrated into code(https://github.com/paulovpcotta/antispoofing/tree/master)
+#Note it only works with a good quality camera please ensure the same 
 '''
 import cv2
 import mediapipe as mp
